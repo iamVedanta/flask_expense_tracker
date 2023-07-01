@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+ <title></title>
+<link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/mainhomepage.css') }}">
+</head>
+<body>
+
+<header class="site-header clearfix">
+ <nav>
+  <div class="logo">
+   <h1>Finance Tracker</h1>
+  </div>
+  <div class="menu">
+   <ul>
+    <li>Home</li>
+    <li>Services</li>
+    <li>AboutUs</li>
+    <li>ContactUs</li>
+<!--    <button class="btu"><a href="http://127.0.0.1:5501/index.html">Sign Up/Login</a></button>-->
+    <form action="/index" method="POST">
+     <input class="btu" type="submit" value="Login/Signup"></p>
+    </form>
+
+
+
+   </ul>
+  </div>
+ </nav>
+ <section>
+  <div class="leftside">
+   <img src="finance.jpg">
+  </div>
+  <div class="rightside">
+   <h1>Experience a fresh way to manage money</h1>
+   <p>Reach your goal with personalized insights,
+    custom budgets, spend tracking, and subscription
+    monitoring--all for free </p>
+   <button>Welcome</button>
+  </div>
+
+ </section>
+
+</header>
+
+
+</body>
+</html>

@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/mainpage.css') }}">
+
+    <title>Expense Tracker App {{ user }}</title>
+</head>
+<body>
+
+
+<script type="text/javascript" src="{{url_for('static', filename='somejavascriptfile.js')}}"></script>
+    <h1>Expense Tracker App for {{ user }}</h1>
+    <div class="input-section">
+        {% if error_message %}
+            <p style="color:red;text-align:right;padding-right: 250px" >Error: {{error_message}}</p>
+        {% endif %}
+        <form method="POST" action="/add">
+        <label for="category-select">Category:</label>
+        <select id="category-select" name="category">
+            <option value="Food & Beverage" name="food">Food & Beverage</option>
+            <option value="Rent" name="rent">Rent</option>
+            <option value="Transport" name="transport">Transport</option>
+            <option value="Relaxing" name="relax">Relaxing</option>
+            <option value="books" name="books">Books and stationaries</option>
+            <option value="entertainment" name="entertainment">Life and Entertainment</option>
+            <option value="investments" name="investments">Investments</option>
+        </select>
+<!--          <p>Category <input type="text" name="category"></p>-->
+        <label for="amount-input">Amount:</label>
+        <input type="number" id="amount-input" name="price" required>
+        <label for="user-name">Name: </label>
+        <input type="text" name="name"  value = "{{ user }}"id="user-name" readonly>
+        <label for="date-input">Date:</label>
+        <input type="date" id="date-input" name="date" required>
+<!--        <button id="add-btn">Add</button>-->
+        <input type="submit" id="add-btn" value="Add">
+        </form>
+    </div>
+    <div class="expenses-list">
+        <h2>Expenses List</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Category</th>
+                    <th>Amount</th>
+                    <th>Date</th>
+                    <th>Delete</th>
+                </tr>
+            </thead>
+            <tbody id="expnese-table-body">
+               {% for row in expense %}
+                <tr>
+                    <td>{{row[0]}}</td>
+                    <td>{{row[2]}}</td>
+                    <td>{{row[1]}}</td>
+                    <form method="POST" action="/delete">
+                        <input type="hidden" name="username" value="{{ user }}">
+                        <input type="hidden" name="categorydel" value="{{row[0]}}">
+                        <input type="hidden" name="pricedel" value="{{row[2]}}">
+                        <input type="hidden" name="datedel" value="{{row[1]}}">
+                        <td><input type="submit" id="delete-btn" value="Delete" name="delete" formmethod="POST"></td>
+                    </form>
+
+                </tr>
+            {% endfor %}
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td>Total:</td>
+                    <td id="total-amount" name="total-amount">{{column_sum}}</td>
+                    <td> </td>
+                    <td></td>
+                </tr>
+            </tfoot>
+        </table>
+
+    </div>
+<div class="pagination" style="text-align: center">
+
+    {% if current_page > 1 %}
+      <a href="?user={{user}}&page={{ current_page - 1 }}">Previous</a>
+    {% endif %}
+
+    {% for page_num in range(1, total_pages + 1) %}
+      {% if current_page == page_num %}
+        <span class="current-page">{{ page_num }}</span>
+      {% else %}
+        <a href="?user={{user}}&page={{ page_num }}">{{ page_num }}</a>
+      {% endif %}
+    {% endfor %}
+
+    {% if current_page < total_pages %}
+      <a href="?user={{user}}&page={{ current_page + 1 }}">Next</a>
+    {% endif %}
+  </div>
+<!--    <script src="script.js"></script>-->
+</body>
+</html>
